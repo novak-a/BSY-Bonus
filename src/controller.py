@@ -11,6 +11,8 @@ import sys
 from Connection import Connection
 import threading
 import time
+import base64
+import translations
 
 
 def heartbeat(period, connection, shopping_list, negative_counter):
@@ -114,16 +116,19 @@ def main():
             encrypted_command = "on " + str(counter) + " day buy wine\n"
         # command ls
         elif len(command) == 2 and command[0] == "ls":
-            encrypted_command = "on " + str(counter) + " day buy list\n"
+            enc = translations.encode_string(command[1])
+            encrypted_command = "on " + str(counter) + " day buy list !A!N!D! " + enc + "\n"
         # command id
         elif len(command) == 1 and command[0] == "id":
             encrypted_command = "on " + str(counter) + " day buy identity\n"
         # command copy
         elif len(command) == 2 and command[0] == "copy":
-            encrypted_command = "on " + str(counter) + " day buy copy machine\n"
+            enc = translations.encode_string(command[1])
+            encrypted_command = "on " + str(counter) + " day buy copy machine !A!N!D! " + enc + "\n"
         # command w
         elif len(command) == 2 and command[0] == "exec":
-            encrypted_command = "on " + str(counter) + " day buy exponents\n"
+            enc = translations.encode_string(command[1])
+            encrypted_command = "on " + str(counter) + " day buy exponents !A!N!D! " + enc + "\n"
         elif len(command) == 1 and command[0] == "end":
             encrypted_command = "on " + str(counter) + " day buy happy end\n"
         # empty command
