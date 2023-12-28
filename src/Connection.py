@@ -62,22 +62,10 @@ class Connection:
             sys.stderr.write(f"Error: {e}")
             return None
 
-    def check_alive(self):
-        # Periodically check if the bot is alive
-        pass
-
-    def print_help(self):
-        # Periodically check if the bot is alive
-        pass
-
-    def execute_command(self, command):
-        # Execute commands and respond with output
-        pass
-
-    def hide_message(self, message, image_path):
-        # Use steganography to hide messages in images
-        pass
-
-    def send_data_to_dropbox(self, data, destination_path):
-        # Upload data to Dropbox
-        pass
+    def delete_file(self, file_path):
+        try:
+            self.dbx.files_delete_v2(file_path)
+            return True
+        except Exception as e:
+            sys.stderr.write(f"Error: {e}")
+            return False
