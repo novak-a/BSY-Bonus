@@ -31,11 +31,20 @@ def heartbeat(period, connection, shopping_list, negative_counter):
             is_ok = False
             print("\033[41m(could not sent heartbeat)\033[0m", end='')
 
-        # Wait for 60 seconds
-        time.sleep(period)
+        # wait
+        time.sleep(period + 10)
 
+        # count bots
         if is_ok:
-            print("\033[42m(10 bots here)\033[0m", end='')
+            no_bots = 0
+            start_path = "/what_i_bought_on_day_" + str(local_counter)
+            files = connection.list_files("")
+            for f in files:
+                path = str(f.path_display)
+                if path.startswith(start_path):
+                    no_bots += 1
+                    connection.delete_file(f.path_display)
+            print("\033[42m(", no_bots, "bots here)\033[0m", end='')
 
 
 def main():
@@ -163,7 +172,7 @@ def main():
                 print("Bot", path[len(start_path) + 1:].split('.')[0], "\n")
                 print(translations.decode_string(content.decode("utf-8")))
                 print("\033[0m")
-                # conn.delete_file(f.path_display)
+                conn.delete_file(f.path_display)
 
 
 if __name__ == "__main__":

