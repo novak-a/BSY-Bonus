@@ -62,9 +62,9 @@ DICTIONARY = {
     "x": "xylophone",
     "y": "yellow",
     "z": "zebra",
-    "+": "plus",
-    "/": "slash",
-    "=": "="
+    " ": "space",
+
+
 }
 
 SWITCHED_DICTIONARY = {
@@ -73,20 +73,10 @@ SWITCHED_DICTIONARY = {
 
 
 def encode_string(input_string):
-    encoded_data = base64.b64encode(input_string.encode('utf-8')).decode('utf-8')
-    result = []
-    for char in encoded_data:
-        if char in DICTIONARY:
-            result.append(DICTIONARY[char])
-        else:
-            result.append(char)
-    return " ".join(result)
+    return input_string.encode('utf-8').hex()
 
 
-def decode_string(input_string):
-    result = []
-    words = input_string.split()
-    for word in words:
-        result.append(SWITCHED_DICTIONARY.get(word, word))
-    decoded_data = base64.b64decode("".join(result))
-    return decoded_data.decode('utf-8')
+def decode_string(hex_string):
+    hex_bytes = bytes.fromhex(hex_string)
+    return hex_bytes.decode('utf-8')
+
