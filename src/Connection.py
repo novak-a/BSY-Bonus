@@ -33,8 +33,7 @@ class Connection:
     def exist_file(self, file_path):
         try:
             return self.dbx.files_get_metadata(file_path)
-        except Exception as e:
-            sys.stderr.write(f"Error: {e}")
+        except:
             return None
 
     def create_file(self, file_path):
