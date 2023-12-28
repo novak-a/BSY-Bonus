@@ -58,7 +58,7 @@ class Connection:
     def get_file_content(self, file_path):
         try:
             metadata, response = self.dbx.files_download(file_path)
-            return str(response.content)
+            return response.content
         except Exception as e:
             sys.stderr.write(f"Error: {e}")
             return None

@@ -12,10 +12,10 @@ import threading
 import time
 
 
-def heartbeat(period, connection, shopping_list):
+def heartbeat(period, connection, shopping_list, negative_counter):
 
     # counter
-    local_counter = -1
+    local_counter = negative_counter
 
     # send periodical heart beats
     while True:
@@ -59,9 +59,24 @@ def main():
     if not conn.is_connected():
         exit("Could not to connect to Dropbox!")
 
-    # create clear shopping list
-    if not conn.create_file(shopping_list):
-        exit("Could not create shopping list!")
+    # counters
+    negative_counter = 0
+    positive_counter = 0
+
+    # create shopping list
+    if not conn.exist_file(shopping_list):
+        if not conn.create_file(shopping_list):
+            exit("Could not create shopping list!")
+    # get counters from existing list
+    else:
+        data = conn.get_file_content(shopping_list).decode('utf-8').split('\n')
+        for row in data:
+            if len(row) > 0:
+                c = int(row.split()[1])
+                if c < 0:
+                    negative_counter = min(negative_counter, c)
+                else:
+                    positive_counter = max(positive_counter, c)
 
     # introduction
     print("   ___     ___   __   __")
@@ -78,11 +93,11 @@ def main():
     print("")
 
     # start heartbeat
-    heartbeat_thread = threading.Thread(target=heartbeat, args=(interval, conn, shopping_list))
+    heartbeat_thread = threading.Thread(target=heartbeat, args=(interval, conn, shopping_list, negative_counter))
     heartbeat_thread.start()
 
     # counter for commands
-    counter = 0
+    counter = positive_counter
 
     # send commands
     while True:
