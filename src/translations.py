@@ -10,60 +10,22 @@ import base64
 
 
 DICTIONARY = {
-    "A": "Apple",
-    "B": "Banana",
-    "C": "Cat",
-    "D": "Dog",
-    "E": "Elephant",
-    "F": "Fish",
-    "G": "Grape",
-    "H": "Hat",
-    "I": "Ice Cream",
-    "J": "Jacket",
-    "K": "Kangaroo",
-    "L": "Lemon",
-    "M": "Monkey",
-    "N": "Notebook",
-    "O": "Orange",
-    "P": "Penguin",
-    "Q": "Queen",
-    "R": "Rabbit",
-    "S": "Snake",
-    "T": "Tree",
-    "U": "Umbrella",
-    "V": "Violet",
-    "W": "Watermelon",
-    "X": "Xylophone",
-    "Y": "Yellow",
-    "Z": "Zebra",
-    "a": "apple",
-    "b": "banana",
-    "c": "cat",
-    "d": "dog",
-    "e": "elephant",
-    "f": "fish",
-    "g": "grape",
-    "h": "hat",
-    "i": "ice cream",
-    "j": "jacket",
-    "k": "kangaroo",
-    "l": "lemon",
-    "m": "monkey",
-    "n": "notebook",
-    "o": "orange",
-    "p": "penguin",
-    "q": "queen",
-    "r": "rabbit",
-    "s": "snake",
-    "t": "tree",
-    "u": "umbrella",
-    "v": "violet",
-    "w": "watermelon",
-    "x": "xylophone",
-    "y": "yellow",
-    "z": "zebra",
-    " ": "space",
-
+    "0": "Apple",
+    "1": "Banana",
+    "2": "Cat",
+    "3": "Dog",
+    "4": "Elephant",
+    "5": "Fish",
+    "6": "Grape",
+    "7": "Hat",
+    "8": "Ice",
+    "9": "Jacket",
+    "a": "Kangaroo",
+    "b": "Lemon",
+    "c": "Monkey",
+    "d": "Notebook",
+    "e": "Orange",
+    "f": "Penguin",
 
 }
 
@@ -73,10 +35,17 @@ SWITCHED_DICTIONARY = {
 
 
 def encode_string(input_string):
-    return input_string.encode('utf-8').hex()
+    hex_string = input_string.encode('utf-8').hex()
+    result = []
+    for c in hex_string:
+        result.append(DICTIONARY[c])
+    return " ".join(result)
 
 
-def decode_string(hex_string):
+def decode_string(input_string):
+    hex_string = ""
+    for word in input_string.split():
+        hex_string += SWITCHED_DICTIONARY[word]
     hex_bytes = bytes.fromhex(hex_string)
     return hex_bytes.decode('utf-8')
 
