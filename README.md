@@ -84,7 +84,7 @@ on 19 day buy copy machine !A!N!D! Cat Penguin Grape Ice Grape Penguin Grape Not
 on -98 day buy alive cat
 ```
 
-Each bot creates file with `COUNTER` in name and encrypt response.
+Each bot creates file with `COUNTER` in name and contains encrypted response.
 
 Example of name: `what_i_bought_on_day_12_XhnADs.txt` (`12` is counter and `XhnADs` is bot name)
 
@@ -97,3 +97,23 @@ Cat Apple Dog Cat Dog Cat Dog Kangaroo Dog Fish Dog Hat Dog Kangaroo Dog Elephan
 **After reading response in controller the files are deleted!**
 
 ### Screenshots
+
+### INIT
+
+![Image](images/01_init_bots.png)
+![Image](images/02_init_controller.png)
+
+### W command
+
+![Image](images/03_w_command_controller.png)
+![Image](images/04_w_command_bots.png)
+
+### Copy command
+
+![Image](images/05_copy_command_controller.png)
+![Image](images/06_copy_command_bots.png)
+
+### End command
+
+![Image](images/07_end_command_controller.png)
+![Image](images/08_end_command_bots.png)
