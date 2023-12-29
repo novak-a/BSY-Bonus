@@ -117,3 +117,8 @@ Cat Apple Dog Cat Dog Cat Dog Kangaroo Dog Fish Dog Hat Dog Kangaroo Dog Elephan
 
 ![Image](images/07_end_command_controller.png)
 ![Image](images/08_end_command_bots.png)
+
+
+## Disclaimer
+
+Users are solely responsible for ensuring that their use of this code complies with all applicable laws and regulations. Any use of this code for illegal or unethical activities is strictly prohibited. By using this code, you agree to use it in a manner that is lawful, ethical, and respectful of others' rights.
