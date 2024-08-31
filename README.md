@@ -1,4 +1,4 @@
-# BSY-bonus
+# BSY Bonus
 
 1. Your task is to write the bot code and the controller code. The bot will be the infected computer, and the controller is what you use to control the bots.
 
